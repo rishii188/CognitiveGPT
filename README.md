@@ -1,6 +1,4 @@
-Got it — here’s the whole README in one copy-paste block for you:
-
-# Working Memory Simulator (WIP)
+# Working Memory Simulator
 
 This is my dissertation project exploring how to simulate human working memory limits in AI agents. The goal is to restrict how much context the model can hold, then use summarisation and retrieval to maintain performance — similar to how people manage short-term and long-term memory.
 
@@ -20,19 +18,19 @@ python -m venv .venv
 source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 pip install -U pip
 pip install -r requirements.txt
+```
 
-
-Minimal requirements.txt:
-
+Minimal `requirements.txt`:
+```
 numpy
 scikit-learn
 sentence-transformers
 transformers
+```
 
-Usage
-
-Example (from memory_buffer.py):
-
+## Usage
+Example (from `memory_buffer.py`):
+```python
 from memory_buffer import WorkingMemory
 
 wm = WorkingMemory(buffer_size=2)
@@ -42,10 +40,10 @@ wm.add("This is the third message (the first one gets summarised).")
 
 print("Buffer:", wm.get_memory())
 print("Summaries:", wm.get_summaries())
+```
 
-
-Example (from vector_store.py):
-
+Example (from `vector_store.py`):
+```python
 from vector_store import VectorMemoryStore
 
 store = VectorMemoryStore()
@@ -54,15 +52,12 @@ store.add("User mentioned they often forget what they were doing.")
 
 results = store.query("The user has trouble remembering things.", k=2)
 print(results)
+```
 
-Status
-
+## Status
 At the moment, the system can:
-
-Keep track of a fixed number of messages.
-
-Summarise evicted messages.
-
-Store and retrieve summaries based on similarity.
+- Keep track of a fixed number of messages.  
+- Summarise evicted messages.  
+- Store and retrieve summaries based on similarity.  
 
 The next stage is integrating these pieces into a controller and testing different memory profiles.
