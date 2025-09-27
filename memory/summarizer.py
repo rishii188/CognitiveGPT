@@ -5,27 +5,43 @@ from transformers import pipeline
 _summarizer = None
 
 def summarize_text(text: str, style: str = "bullet") -> str:
-    global _summarizer
-    if _summarizer is None:
-        _summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
+    # For short texts, use simple formatting - no need for complex summarization
+    if len(text.split()) < 10:
+        if style == "bullet":
+            return f"- {text}"
+        return text
 
-    # Tweak lengths a bit for short inputs
-    if style == "concise":
-        max_len, min_len = 80, 20
-    else:
-        max_len, min_len = 128, 30
+    # Use extractive summarization instead of abstractive (BART)
+    # This prevents the model from adding its own content
+    try:
+        # Simple extractive approach - take the first meaningful sentence
+        sentences = [s.strip() for s in re.split(r'(?<=[.!?])\s+', text) if s.strip()]
+        meaningful_sentences = [s for s in sentences if len(s.split()) > 4]
+        
+        if not meaningful_sentences:
+            if style == "bullet":
+                return f"- {text[:100]}..." if len(text) > 100 else f"- {text}"
+            return text[:100] + "..." if len(text) > 100 else text
+        
+        if style == "bullet":
+            # For bullet style, use up to 2 key sentences
+            bullets = [f"- {s}" for s in meaningful_sentences[:2]]
+            return "\n".join(bullets)
+        else:
+            # For concise style, use the first key sentence
+            return meaningful_sentences[0]
+            
+    except Exception as e:
+        # Fallback
+        if style == "bullet":
+            return f"- {text[:100]}..." if len(text) > 100 else f"- {text}"
+        return text[:100] + "..." if len(text) > 100 else text
 
-    out = _summarizer(
-        text,
-        max_length=max_len,
-        min_length=min_len,
-        do_sample=False
-    )[0]["summary_text"].strip()
-
-    if style == "bullet":
-        # Turn summary into up to 3 bullets
-        sents = [s.strip() for s in re.split(r'(?<=[.!?])\s+', out) if s.strip()]
-        bullets = [f"- {s}" for s in sents[:3]] or [f"- {out}"]
-        return "\n".join(bullets)
-
-    return out
+if __name__ == "__main__":
+    test_text = (
+        "CognitiveGPT is an AI agent that mimics human working memory. "
+        "It can forget, summarize, and retrieve old information just like a brain. "
+        "The user wants to simulate ADHD and photographic memory too."
+    )
+    summary = summarize_text(test_text, style="bullet")
+    print("📋 Summary:\n", summary)
