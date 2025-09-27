@@ -1,34 +1,25 @@
-Working Memory Simulator
-This project is an experiment in simulating bounded working memory for AI agents. The aim is to explore how short-term memory limits, summarisation, and retrieval affect reasoning and task performance.
+# Working Memory Simulator (WIP)
 
-Current components
+This is my dissertation project exploring how to simulate human working memory limits in AI agents. The goal is to restrict how much context the model can hold, then use summarisation and retrieval to maintain performance — similar to how people manage short-term and long-term memory.
 
-WorkingMemory buffer (memory_buffer.py)
-Fixed-size deque that holds recent messages. When older items are evicted, they are summarised and stored separately.
+## Current components
+- `memory_buffer.py`: fixed-size buffer that summarises messages when they are evicted.  
+- `summarizer.py`: simple extractive summariser for short or long texts.  
+- `vector_store.py`: embedding-based retrieval using `sentence-transformers/all-MiniLM-L6-v2` and cosine similarity.  
 
-Summariser (summarizer.py)
-Simple extractive summariser. For short inputs, it just formats the text; for longer inputs, it picks out key sentences. No external API calls — runs locally.
+## Planned features
+- Profiles for different memory styles (e.g. ADHD-like, photographic).  
+- Streamlit interface for visualising memory state.  
+- Evaluation tasks to measure reasoning performance under memory constraints.  
 
-VectorMemoryStore (vector_store.py)
-Embedding-based retrieval of summaries using sentence-transformers/all-MiniLM-L6-v2 and cosine similarity. Allows querying past information that has been summarised and stored.
-
-Planned features
-
-Profiles for different “memory styles” (e.g. ADHD-like vs. photographic).
-
-Streamlit interface for visualising memory state.
-
-Evaluation harness to test reasoning tasks under different memory constraints.
-
-Installation
+## Installation
+```bash
 python -m venv .venv
-source .venv/bin/activate   # On Windows: .venv\\Scripts\\activate
+source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 pip install -U pip
 pip install -r requirements.txt
 
-
 Minimal requirements.txt:
-
 numpy
 scikit-learn
 sentence-transformers
@@ -37,7 +28,6 @@ transformers
 Usage
 
 Example (from memory_buffer.py):
-
 from memory_buffer import WorkingMemory
 
 wm = WorkingMemory(buffer_size=2)
@@ -48,9 +38,7 @@ wm.add("This is the third message (the first one gets summarised).")
 print("Buffer:", wm.get_memory())
 print("Summaries:", wm.get_summaries())
 
-
 Example (from vector_store.py):
-
 from vector_store import VectorMemoryStore
 
 store = VectorMemoryStore()
@@ -62,7 +50,7 @@ print(results)
 
 Status
 
-This is an early prototype. At the moment, the system can:
+At the moment, the system can:
 
 Keep track of a fixed number of messages.
 
