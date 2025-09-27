@@ -1,6 +1,6 @@
 # Working Memory Simulator
 
-This is my dissertation project exploring how to simulate human working memory limits in AI agents. The goal is to restrict how much context the model can hold, then use summarisation and retrieval to maintain performance — similar to how people manage short-term and long-term memory.
+This is my dissertation project exploring how to simulate human working memory limits in AI agents. The goal is to restrict how much context the model can hold, then use summarisation and retrieval to maintain performance which is similar to how people manage short-term and long-term memory.
 
 ## Current components
 - `memory_buffer.py`: fixed-size buffer that summarises messages when they are evicted.  
@@ -61,3 +61,4 @@ At the moment, the system can:
 - Store and retrieve summaries based on similarity.  
 
 The next stage is integrating these pieces into a controller and testing different memory profiles.
+
