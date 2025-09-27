@@ -1,3 +1,5 @@
+Got it — here’s the whole README in one copy-paste block for you:
+
 # Working Memory Simulator (WIP)
 
 This is my dissertation project exploring how to simulate human working memory limits in AI agents. The goal is to restrict how much context the model can hold, then use summarisation and retrieval to maintain performance — similar to how people manage short-term and long-term memory.
@@ -19,7 +21,9 @@ source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 pip install -U pip
 pip install -r requirements.txt
 
+
 Minimal requirements.txt:
+
 numpy
 scikit-learn
 sentence-transformers
@@ -28,6 +32,7 @@ transformers
 Usage
 
 Example (from memory_buffer.py):
+
 from memory_buffer import WorkingMemory
 
 wm = WorkingMemory(buffer_size=2)
@@ -38,7 +43,9 @@ wm.add("This is the third message (the first one gets summarised).")
 print("Buffer:", wm.get_memory())
 print("Summaries:", wm.get_summaries())
 
+
 Example (from vector_store.py):
+
 from vector_store import VectorMemoryStore
 
 store = VectorMemoryStore()
