@@ -1,4 +1,4 @@
-# Working Memory Simulator
+# CognitiveGPT
 
 This is a project on exploring how to simulate human working memory limits in AI agents. The goal is to restrict how much context the model can hold, then use summarisation and retrieval to maintain performance which is similar to how people manage short-term and long-term memory. Note: this project is not complete.
 
@@ -61,5 +61,6 @@ At the moment, the system can:
 - Store and retrieve summaries based on similarity.  
 
 The next stage is integrating these pieces into a controller and testing different memory profiles.
+
 
 
